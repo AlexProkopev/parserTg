@@ -1,0 +1,24 @@
+{
+  "name": "parsertg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexProkopev/parserTg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexProkopev/parserTg/issues"
+  },
+  "homepage": "https://github.com/AlexProkopev/parserTg#readme",
+  "description": "",
+  "dependencies": {
+    "input": "^1.0.1",
+    "telegram": "^2.26.22"
+  }
+}
