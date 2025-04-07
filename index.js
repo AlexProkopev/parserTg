@@ -1,16 +1,18 @@
-const connectClient = require("./session"); // Подключение к Telegram API
-const joinChat = require("./joinChat"); // Присоединение к чату
-const parseMembers = require("./parseMembers"); // Парсинг участников
-const input = require("input"); // Ввод с консоли
+const connectClient = require("./session"); 
+const joinChat = require("./joinChat"); 
+const parseMembers = require("./parseMembers"); 
+const input = require("input");
 
 (async () => {
   try {
     const client = await connectClient();
 
     const chatLink = await input.text("Вставь ссылку на чат: ");
-
+    if (!chatLink.includes("t.me/") && !chatLink.startsWith("+")) {
+      console.log("❌ Неверная ссылка. Вставь ссылку вида https://t.me/имя_чата или инвайт.");
+      return;
+    }
     if (chatLink.includes("+")) {
-      // Если ссылка содержит +, это инвайт-ссылка
       const result = await joinChat(client, chatLink);
       if (result) {
         console.log("✅ Присоединились к чату по инвайт-ссылке.");
@@ -30,7 +32,6 @@ const input = require("input"); // Ввод с консоли
         console.log("❌ Не удалось присоединиться по инвайт-ссылке.");
       }
     } else {
-      // Если это обычная ссылка на чат (без инвайт-ссылки)
       const chatUsername = chatLink.replace("https://t.me/", "");
 
       try {
