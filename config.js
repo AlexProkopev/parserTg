@@ -1,5 +1,5 @@
 module.exports = {
-    apiId: 123123,
-    apiHash: "",
-    stringSession: "", // если есть сохранённая строка — вставь сюда
+    apiId: 20335961,
+    apiHash: "e34cc60ae543f62297f64ea93d8c6be6",
+    stringSession: "1AgAOMTQ5LjE1NC4xNjcuNTABuzIJwaMt7yxRIdnIZaweAPKCBdQt6cDAYblrgSGsjx1urLzOiK5TppK6X1SjWiiyjzG6tqJI1J91oFdSrFXMRzWCami8Xw72CRhdx0rMlkKMvbmu1TkS0txXDvNkx3wEuplOOBqP7BjkeMYcHMSr3M3PxN2U1bZw5gJ58F6sGITU3+kTHxi3aTIkS2d1CPQRjwQb0lg93gLBNgtcnVOApvGCobbhDSLOVGU+QZ9n1xtCsko7gVBIZJbuZDNtttEyMBSjv8o3fYc4CYHQLUXqrJ1WWKRb4QyXW5jr1qw1S69FkPKVQrzHecNLmRSp70wQVxHxEqFWcLJK9raRENwmShA=", // если есть сохранённая строка — вставь сюда
   };
