@@ -22,8 +22,8 @@
 
 **Если участники скрыты (парсит через SMS и фильтрует дубли):**
 
-![Пример 2](https://ibb.co/ZzxNsqKR)  
-![Пример 3](https://ibb.co/xqBST115)
+![Пример 2](https://i.ibb.co/RTc7nRPG/image.png) 
+![Пример 3](https://i.ibb.co/k2wgC44c/image.png)
 
 ---
 
@@ -41,3 +41,4 @@
 git clone https://github.com/your-username/telegram-parser
 cd telegram-parser
 npm install
+node index.js
