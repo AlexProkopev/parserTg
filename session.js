@@ -20,17 +20,13 @@ async function connectClient() {
 
     console.log("✅ Авторизация прошла успешно!");
 
-    // Выводим строку сессии в консоль
     const stringSession = client.session.save();
     console.log("Сессия сохранена: ", stringSession);
-
-    // Вставь полученную строку сессии в файл config.js
     console.log("Скопируйте строку сессии и вставьте в config.js в поле stringSession.");
-
     return client;
   } catch (error) {
     console.error("❌ Ошибка при авторизации:", error.message);
-    process.exit(1);  // Прерываем процесс при ошибке
+    process.exit(1); 
   }
 }
 
