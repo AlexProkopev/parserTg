@@ -1,4 +1,6 @@
 const { Api } = require('telegram');
+const fs = require('fs');
+const path = require('path');
 
 async function parseMessages(client, chat) {
   try {
@@ -43,7 +45,7 @@ async function parseMessages(client, chat) {
         const user = await client.getEntity(userId);
         users.push({
           id: user.id.toString(),
-          username: user.username || "Не указано",
+          username: user.username ? `@${user.username}` : "Не указано",
           name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Без имени",
         });
       } catch (err) {
@@ -60,6 +62,24 @@ async function parseMessages(client, chat) {
     }
 
     console.log(`🔍 Найдено уникальных пользователей через сообщения: ${users.length}`);
+    
+    // Сохраняем результаты в файл
+    const usersWithUsername = users.filter(user => user.username !== "Не указано");
+    if (usersWithUsername.length > 0) {
+      const folder = path.join(__dirname, 'results');
+      if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
+      }
+
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const filename = path.join(folder, `messages_${timestamp}.txt`);
+      
+      const fileContent = usersWithUsername.map(u => `${u.username}`).join('\n');
+      fs.writeFileSync(filename, fileContent, 'utf8');
+
+      console.log(`📁 Сохранено в файл: ${filename}`);
+    }
+    
     return users;
 
   } catch (err) {

@@ -1,7 +1,8 @@
+const fs = require('fs');
+const path = require('path');
 const parseMessages = require('./parseMessages');
 const { Api } = require('telegram');
 
-// Функция для получения общего количества участников
 async function getChatParticipantCount(client, chat) {
   const fullChat = await client.invoke(
     new Api.channels.GetFullChannel({
@@ -12,10 +13,8 @@ async function getChatParticipantCount(client, chat) {
   return fullChat.fullChat.participantsCount;
 }
 
-// Функция для парсинга участников
 async function parseMembers(client, chat) {
   try {
-    // Получаем общее количество участников чата
     const totalCount = await getChatParticipantCount(client, chat);
     console.log(`Общее количество участников в чате: ${totalCount}`);
 
@@ -23,13 +22,12 @@ async function parseMembers(client, chat) {
     try {
       participants = await client.getParticipants(chat.id);
       console.log(`🔍 Найдено участников через getParticipants: ${participants.length}`);
-      
-      // Если количество участников через getParticipants меньше 20% от общего количества участников
+
       if (participants.length < totalCount * 0.2) {
         console.warn("⚠️ Участников слишком мало, переключаемся на парсинг сообщений...");
         return await parseMessages(client, chat);
       }
-      
+
       if (participants.length === 0) {
         throw new Error("Участники скрыты или отсутствуют");
       }
@@ -39,14 +37,26 @@ async function parseMembers(client, chat) {
     }
 
     const users = participants
-      .filter(user => !user.bot && !user.admin)
+      .filter(user => user.username && !user.bot && !user.admin)
       .map(user => ({
-        id: user.id.toString(),
-        username: user.username || "Не указано",
+        username: `@${user.username}`,
         name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Без имени",
       }));
 
-    console.log(`✅ Найдено пользователей: ${users.length}`);
+    console.log(`✅ Пользователей с username: ${users.length}`);
+
+    const folder = path.join(__dirname, 'results');
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder);
+    }
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = path.join(folder, `${chat.username || chat.id}_${timestamp}.txt`);
+    
+    const fileContent = users.map(u => `${u.username}`).join('\n');
+    fs.writeFileSync(filename, fileContent, 'utf8');
+
+    console.log(`📁 Сохранено в файл: ${filename}`);
     return users;
 
   } catch (err) {
