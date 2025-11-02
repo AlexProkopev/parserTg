@@ -3,7 +3,6 @@ const { StringSession } = require('telegram/sessions');
 const input = require('input'); 
 const config = require('./config'); 
 
-
 async function connectClient() {
   const client = new TelegramClient(new StringSession(config.stringSession), config.apiId, config.apiHash, {
     connectionRetries: 5,
@@ -24,7 +23,6 @@ async function connectClient() {
     const stringSession = client.session.save();
     console.log("Сессия сохранена: ", stringSession);
     console.log("Скопируйте строку сессии и вставьте в config.js в поле stringSession.");
-
     return client;
   } catch (error) {
     console.error("❌ Ошибка при авторизации:", error.message);

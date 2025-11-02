@@ -4,11 +4,11 @@ const path = require('path');
 
 async function parseMessages(client, chat) {
   try {
-    let allUsers = new Map(); // Используем Map для уникальности пользователей
+    let allUsers = new Map(); 
     let offsetId = 0;
     let limit = 50;
     let totalMessages = 0;
-    const maxMessages = 1000; // Ограничение на 25 000 сообщений
+    const maxMessages = 1000; 
 
     console.log("🔍 Запуск парсинга сообщений...");
 
@@ -31,7 +31,6 @@ async function parseMessages(client, chat) {
 
       for (let message of messages) {
         if (message.fromId?.userId) {
-          // Используем Map для хранения пользователей по их ID
           allUsers.set(message.fromId.userId, message.fromId.userId);
         }
       }
